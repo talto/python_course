@@ -104,31 +104,6 @@ $ curl -X POST  -H "Content-Type: application/json" -d '{"account": "horns&hoofs
 {"code": 200, "response": {"1": ["books", "hi-tech"], "2": ["pets", "tv"], "3": ["travel", "music"], "4": ["cinema", "geek"]}}
 ```
 
-__Актуальный пример с хешом__
-```curl -X POST http://127.0.0.1:8080/method/ \
-     -H "Content-Type: application/json" \
-     -d "$(python - <<'PY'
-import hashlib, datetime, json
-# ---------- 1. генерируем токен ----------
-digest_src = datetime.datetime.now().strftime("%Y%m%d%H") + "42"
-token = hashlib.sha512(digest_src.encode()).hexdigest()
-
-# ---------- 2. собираем тело запроса -----
-payload = {
-    "account": "horns&hoofs",
-    "login":   "admin",
-    "method":  "clients_interests",
-    "token":   token,
-    "arguments": {
-        "client_ids": [1, 2, 3, 4],
-        "date": "20.07.2017"
-    }
-}
-print(json.dumps(payload, ensure_ascii=False))
-PY
-)"
-```
-
 #### Логирование
 1. скрипт должен писать логи через библиотеку logging в формате `'[%(asctime)s] %(levelname).1s %(message)s'` c датой в виде `'%Y.%m.%d %H:%M:%S'`. Допускается только использование уровней `info`, `error` и `exception`. Путь до логфайла указывается в конфиге, если не указан, лог должен писаться в stdout
 
