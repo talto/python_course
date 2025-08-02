@@ -1,4 +1,3 @@
-# app/main.py
 from fastapi import FastAPI, Response, Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import secrets
